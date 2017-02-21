@@ -19,12 +19,15 @@ inicio:-
 labora(Individuo):-
   trabaja(Individuo,Organizacion),
   write('Labora en: '),
-  write(Organizacion),nl.
+  write(Organizacion),nl;
+  write('NO TRABAJA '),nl.
 
 estudy(Individuo):-
   estudia(Individuo,Escuela),
   write('Estudia en: '),
-  write(Escuela),nl.
+  write(Escuela),nl;
+  write("NO ESTUDIA "),nl.
 
 nini(Individuo):-
-  write('ES UN NINI!!!').
+  write(Individuo),
+  write(' ES UN NINI!!!').
