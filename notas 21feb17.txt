@@ -1,0 +1,8 @@
+BASE DE CONOCIMIENTO :- una represetnacion declarativa del expertis, frecuentemenete en reglas IF-THEN (Reglas de produccion)
+AREA DE ALMACENAMIENTO :- Los datos especificos de un problema a resolver
+MOTOR DE INFERENCIA :- El codifo en el nucleo del sistema, este realiza las inferencias usando la base de conocimiento y el area de almacenamiento
+INTERFAZ DE USUARIO :- El codigo que controla el dialogo entre el usuario y el sistema
+EXPERTO :- Individuo que tiene el expertis para resolver los problemas que el sistema intenta resolver.
+ING. DEL CONOCIMIENTO :- El profesional que codifica el conocimiento del experto en forma declarativa la cual usa el sistema experto.
+ING. EN INFORMATICA :- individuo que construye la interfaz de usuario y el area de almacenamiento.
+USUARIO :- cavernicola con una computadora, que intenta consultar al sistema experto para obtener consejo, carajo es una computadora no un psicologo.
