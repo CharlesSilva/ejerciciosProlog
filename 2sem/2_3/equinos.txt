@@ -1,0 +1,92 @@
+top_goal(X):-
+	equino(X).
+
+/*Especies de caballos grandes*/
+
+equino(equus_galicus):-
+	familia(equus_monchavensis),
+	talla(grande),
+	color(golden),!.
+
+equino(equus_germanicus):-
+	familia(equus_monchavensis),
+	talla(grande),
+	color(black),!.
+
+/*Especies de caballos medianos*/
+
+equino(cebra):-
+	familia(equus_pumpelli),
+	talla(mediana),
+	color(rayado),!.
+
+equino(e_tabeti):-
+	family(equus_pumpelli),
+	talla(mediana),
+	color(mixto),!.
+
+equino(caballo_oriental):-
+	familia(equus_pumpelli),
+	color(cafe_opaco),
+	talla(mediana),!.
+
+
+
+/*Clasificación Familiar*/
+
+familia(equus_monchavensis):-
+	orden(gigante),
+	size(large),
+	legs(long_strong).
+	
+familia(equus_pumpelli):-
+	orden(pequeña),
+	size(short),
+	jump(ponderous).
+
+
+/*Reglas de clasificacion de orden*/
+
+orden(gigante):-
+	pelaje(fino),
+	nariz(cafe),
+	live(america),
+	cabellera(larga).
+	
+orden(pequeña):-
+	pelaje(robusto),
+	nariz(negra),
+	live(africa),
+	cola(ondular).
+
+
+/*Preguntas tipo atributo-valor*/
+pelaje(X):- ask(pelaje, X), !.
+nariz(X):- ask(nariz, X), !.
+live(X):- ask(live, X), !.
+cabellera(X):- ask(cabellera, X), !.
+esquema(X):- ask(esquema, X), !.
+size(X):- ask(size, X), !.
+color(X):- ask(color, X), !.
+legs(X):- ask(legs, X), !.
+jump(X):- ask(jump, X), !.
+talla(X):- ask(talla, X), !.
+cola(X):- ask(cola, X), !.
+
+
+
+/*---Control de Validacin de Preguntas---*/
+%pregunta por atributo-valor
+ask(A,V):-	
+	known(si,A,V), % succed if true
+	!. % stop looking
+ask(A,V):-
+	known(no,A,V), % fail if false
+	!,fail.
+
+ask(A,V):-
+	write(A:V), % ask user
+	write('? (si/no): '),
+	read(Y), % get the answer
+	asserta(known(Y,A,V)), % remember it
+	Y==si. %succeed or fail

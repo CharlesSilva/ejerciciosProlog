@@ -1,0 +1,186 @@
+/*un shell sencillo */
+
+go:-
+	greeting,
+	repeat,
+	write('>>'), read(X),
+	do(X),
+	X==quit.
+
+greeting:-
+	write('This is the Native Prolog shell.'),nl,
+	write('Introdusca load, consult o quit en el prompt.'),nl.
+	do(load):- load_kb, !.
+	do(consult):- solve, !.
+	do(quit).
+
+do(X):-
+	write(X),
+	write('is not a legal command.'), nl,
+	fail.
+
+load_kb:-
+	write('super.txt	albatros.txt'),nl,
+	write('Enter file name: '),
+	read(F),
+	reconsult(F),
+	write(F),
+	write(' Ha sido cargada'), nl.
+
+solve:-
+	top_goal(X),
+	write('The asnwer is '),
+	write(X), nl.
+
+solve:-
+	write('No answer found. '), nl.
+
+
+
+/*
+start:-
+	consult('conocimiento.txt'),
+	fail.
+*/
+start:-
+	assert(si(end)),
+	assert(no(end)),
+	write('Introducir informaci�n (s/n): '),nl,
+	read(A),
+	A=s,
+	not(introducir),!,
+	preguntar.
+
+start:-
+	preguntar.
+
+/* introducir objetos y sus atributos */
+
+introducir:-
+	write('De que suborden es (fin -para terminar)?: '),
+	read(Object),
+	not(Object=fin),
+	atributos(Object,[]),
+	write('�Otro objeto (s/n)?: '),!,
+	read(R),
+	R=s,
+	introducir.
+
+/* Obtener los atributos */
+
+atributos(Object,Lista):-
+	write(Object),
+	write(' familia/alas/vive/colores (fin -para terminar)? = '),
+	read(Attribute),
+	not(Attribute=fin),
+	add(Attribute,Lista,Lista2),
+	atributos(Object,Lista2).
+
+/* Guardar el objeto en la base de conocimiento */
+
+atributos(Object,Lista):-
+	assert(info(Object,Lista)),
+	open('conocimiento.txt',append,Stream),
+	write(Stream,'user:info('),
+	write(Stream,Object),
+	write(Stream,','),
+	write(Stream,Lista),
+	write(Stream,').'),
+	nl(Stream),
+	close(Stream).
+
+member(X,[X|L]):-
+	!.
+
+member(X,[Y|L]):-
+	member(X,L).
+
+add(X,L,L):-
+	member(X,L),!.
+
+add(X,L,[X|L]).
+
+
+/* pide informaci�n al usuario para encontrar un objeto */
+
+preguntar:-
+	info(Obj,Atr),
+	anterioressi(Atr), /*comprueba las respuestas si anteriores*/
+	anterioresno(Atr),
+	intentar(Obj,Atr),
+	purgar.
+
+preguntar:-
+	purgar.
+
+/* selecciona todos los objetos que tinen los atributos apropiados ya determinados anteriormente */
+
+anterioressi(A):-
+	si(T),!,
+	xanterioressi(T,A,[]),!.
+
+xanterioressi(end,_,_):-!.
+xanterioressi(T,A,L):-
+	member(T,A),!,
+	add(T,L,L2),
+	si(X), not(member(X,L2)),!,
+	xanterioressi(X,A,L2).
+
+/* verifica por los objetos que tinen atributos ya determinados como no */
+
+anterioresno(A):-
+	no(T),!,
+	xanterioresno(T,A,[]),!.
+
+xanterioresno(end,_,_):-!.
+xanterioresno(T,A,L):-
+	not(member(T,A)),!,
+	add(T,L,L2),
+	no(X), not(member(X,L2)),!,
+	xanterioresno(X,A,L2).
+
+/* intentar una hipotesis (meta) */
+
+intentar(Obj,[]):-
+	write('El objeto encontrado es: '),
+	write(Obj),nl.
+
+intentar(Obj,[X|T]):-
+	si(X),!,intentar(Obj,T).
+
+intentar(Obj,[X|T]):-
+	write('Tiene el atributo '),
+	write(X), write('? (s/n): '),
+	read(R),
+	procesar(Obj,X,R),!,
+	intentar(Obj,T).
+
+/* procesar varias respuestas */
+
+procesar(_,X,s):-
+	asserta(si(X)),!.
+
+procesar(_,X,n):-
+	asserta(no(X)),!,fail.
+
+procesar(Obj,X,porque):-
+	write('Creo que puede ser '),
+	write(Obj),write(' porque tiene: '),nl,
+	si(Z),xwrite(Z),nl,
+	Z=end,!,
+	write('tiene el atributo '),
+	write(X), write('? (s/n) '),
+	read(R),
+	procesar(Obj,X,R),!.
+
+xwrite(end).
+xwrite(Z):-
+	write(Z).
+
+purgar:-
+	retract(si(X)),
+	X=end, fail.
+
+purgar:-
+	retract(no(X)),
+	X=end.

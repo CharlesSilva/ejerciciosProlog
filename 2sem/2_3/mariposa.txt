@@ -1,0 +1,93 @@
+ /*Especies de Mariposas */
+
+top_goal(X):-
+	mariposa(X).
+
+mariposa(sub_zeugloptera):-
+	familia(micropter�gidos),
+	alas(estrechas),
+	color(opacos),
+	ubicacion(norteamerica),!.
+
+mariposa(sub_aglossata):-
+	familia(agat�fagos),
+	alas(estrechas),
+	color(opacos),
+	ubicacion(australia),!.
+
+mariposa(sub_heterobathmiina):-
+	familia(heterobatmioideos),
+	alas(anchas),
+	color(metalicos),
+	ubicacion(sudamerica),!.
+
+mariposa(sub_glossata):-
+	familia(heteroneura),
+	alas(nervadura),
+	color(vivos),
+	ubicacion(america),!.
+
+
+
+/****** Clasificacion familiar ******/
+
+familia(micropter�gidos):-
+	provisto(mandibulas),
+	tama�o(peque�as),
+	ojos(simples_y_compuestos),
+	horario(diurnas),
+	alimento(polen).
+
+familia(agat�fagos):-
+	provisto(espiritrompa),
+	tama�o(mediano),
+	ojos(compuestos),
+	horario(nocturnas),
+	alimento(polen).
+
+familia(heterobatmioideos):-
+	provisto(espiritrompa),
+	tama�o(peque�o_mediano),
+	ojos(compuestos),
+	horario(diurnas),
+	alimento(polen).
+
+familia(heteroneura):-
+	provisto(mandibulas),
+	tama�o(grandes),
+	ojos(compuestos),
+	horario(diurnas),
+	alimento(polen).
+
+
+/******Preguntas tipo atributo-valor******/
+
+provisto(X):- ask(provisto, X),!.
+tama�o(X):- ask(tama�o,X),!.
+ojos(X):- ask(ojos,X),!.
+horario(X):- ask(horario,X),!.
+alimento(X):- ask(alimento,X),!.
+alas(X):- ask(alas,X),!.
+color(X):- ask(color,X),!.
+ubicacion(X):- ask(ubicacion,X),!.
+
+
+/*---Control de Validacin de Preguntas---*/
+ask(A,V):-
+	known(si,A,V), % succed if true
+	!. % stop looking
+ask(A,V):-
+	known(no,A,V), % fail if false
+	!,fail.
+
+ask(A,V):-
+	write(A:V), % ask user
+	write('? (si/no): '),
+	read(Y), % get the answer
+	asserta(known(Y,A,V)), % remember it
+	Y==si. %succeed or fail
+
+  known(X,A,V):-
+  	X = si,
+  	mariposa(A);
+  	fail.

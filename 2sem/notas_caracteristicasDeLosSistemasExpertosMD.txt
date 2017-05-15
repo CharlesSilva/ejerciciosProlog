@@ -1,0 +1,15 @@
+#Caracteristicas de un sistema experto
+
+1 Razonamiento guiado por las metas ( GOAL DRIVEN ) o encadenamiento hacia atras
+( BACKWARD CHAINING ). Una tecnica de inferencia que usa regas IF ... THEN, repetidamente para partir una meta en submetas las cuales son mas faciles de demostrar.
+
+2 Trabajando con incertidumbre: la habilidad del sistema para razonar con reglas y datos que no son precisos
+
+3 Razonamiento guiado por los Datos (data driven) oencadenamiento hacia adelante (forward driven).
+  una tecnica de inferencia que usa reglas if ...then para deducir una solucion a un problema desde los datos iniciales
+
+4 Explicaciones. La habilidad del sistema para explicar el proceso de razonamiento que se uso para proporcionar una recomendacion.
+
+***
+
+##

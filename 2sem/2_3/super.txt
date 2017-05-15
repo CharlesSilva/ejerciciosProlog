@@ -1,0 +1,57 @@
+
+top_goal(X):-super(X).
+
+super(spiderman):-
+	equipo(marvel),
+	poder(aracnido),!.
+
+super(magneto):-
+	equipo(xmen),
+	poder(magnetico),!.
+
+
+super(ironMan):-
+	equipo(avengers),
+	poder(armadura),!.
+
+
+
+/*Clasificaci�n equipor*/
+
+equipo(xmen):-
+	orden(mutante),
+	poder(mutacion).
+
+equipo(marvel):-
+	orden(noMutante),
+	live(si).
+
+
+/*Preguntas tipo atributo-valor*/
+equipo(X):- ask(equipo,X), !.
+poder(X):- ask(poder, X), !.
+orden(X):- ask(orden, X), !.
+live(X):- ask(live, X), !.
+
+
+
+/*---Control de Validacin de Preguntas---*/
+%pregunta por atributo-valor
+ask(A,V):-
+	known(si,A,V), % succed if true
+	!. % stop looking
+ask(A,V):-
+	known(no,A,V), % fail if false
+	!,fail.
+
+ask(A,V):-
+	write(A:V), % ask user
+	write('? (si/no): '),
+	read(Y), % get the answer
+	asserta(known(Y,A,V)), % remember it
+	Y==si. %succeed or fail
+
+known(X,A,V):-
+	X = si,
+	super(A);
+	fail.

@@ -1,0 +1,7 @@
+:-dynamic info/2.
+user:info(spiderman,[joven,aracnido,telarana,no_mutante]).
+user:info(ironman,[armadura,rayos,no_mutante,joven]).
+user:info(cable,[viejo,telekinesis,mutante]).
+user:info(wolverine,[viejo,experimento,mutante,regeneracion]).
+user:info(cyclope,[joven,mutante,rayos_laser]).
+user:info(warmachine,[metralletas,armadura,no_mutante]).

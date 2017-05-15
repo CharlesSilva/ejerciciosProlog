@@ -1,0 +1,63 @@
+
+top_goal(X):-bird(X).
+
+bird(laysan_albatros):-
+	familia(albatros),
+	color(white),!.
+
+bird(black_footed_albatros):-
+	familia(albatros),
+	color(dark),!.
+
+
+bird(trumpeter_swam):-
+	familia(swam),
+	voice(loud),!.
+
+
+
+/*Clasificaci�n Familiar*/
+
+familia(albatros):-
+	orden(waterflow),
+	neck(long),
+	color(white),
+	flight(ponderous).
+
+familia(swan):-
+	orden(tobenouse),
+	live(at_sea),
+	bill(hooked).
+
+
+/*Preguntas tipo atributo-valor*/
+pelaje(X):- ask(pelaje, X), !.
+color(X):- ask(color, X), !.
+orden(X):- ask(orden, X), !.
+neck(X):- ask(neck, X), !.
+live(X):- ask(live, X), !.
+voice(X):- ask(loud, X), !.
+flight(X):-ask(flight,X),!.
+
+
+
+/*---Control de Validacin de Preguntas---*/
+%pregunta por atributo-valor
+ask(A,V):-
+	known(si,A,V), % succed if true
+	!. % stop looking
+ask(A,V):-
+	known(no,A,V), % fail if false
+	!,fail.
+
+ask(A,V):-
+	write(A:V), % ask user
+	write('? (si/no): '),
+	read(Y), % get the answer
+	asserta(known(Y,A,V)), % remember it
+	Y==si. %succeed or fail
+
+known(R,A,V):-
+	R = si,
+	bird(A);
+	fail.

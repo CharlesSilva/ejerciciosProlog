@@ -1,0 +1,19 @@
+:-dynamic info/2.
+user:info(tortuga,[cola,nada]).
+
+user:info(canario,[cola,plumas,canta]).
+
+user:info(gato,[cola,maulla]).
+
+user:info(pug,[cola,ladra,chico]).
+
+user:info(labrador,[cola,ladra,grande]).
+
+user:info(lombriz,[sin_cola,arrastra,chica]).
+
+user:info(vibora,[sin_cola,arrastra,larga]).
+user:info(leon,[ruge,colmillos,cola]).
+user:info(cocodrilo,[verde,dientes_filosos,cola]).
+user:info(gallina,[cola,plumas,ave]).
+user:info(cara,[pestañas,cejas,nariz,boca,ojos]).
+user:info(pez,[escamas,ojos,aletas]).

@@ -1,0 +1,6 @@
+:-dynamic info/2.
+user:info(venom,[joven,aracnido,telarana,no_mutante]).
+user:info(joker,[loco,maquillaje,no_mutante,joven]).
+user:info(magneto,[viejo,magnetismo,mutante]).
+user:info(deadpool,[joven,experimento,mutante,regeneracion]).
+user:info(apocalypto,[joven,mutante,maya,todosLosPoderes]).
